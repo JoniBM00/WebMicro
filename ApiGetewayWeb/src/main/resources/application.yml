@@ -1,0 +1,28 @@
+server:
+  port: 8100
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: MicroWeb
+          uri: lb://MICROWEB #NOMBRE DEL MICRO DE LA WEB EN EL EUREKA
+          predicates:
+          - Path=/
+        - id: MicroCatalogo
+          uri: lb://MICROCATALOGO #NOMBRE DEL MICRO DE CATALOGO EN EL EUREKA
+          predicates:
+          - Path=/catalogo/getAll
+        - id: TarifaMicro
+          uri: lb://TARIFAMICRO #NOMBRE DEL MICRO DE CATALOGO EN EL EUREKA
+          predicates:
+          - Path=/tarifa/getAll
+        
+  application:
+    name: apiGatewayWeb
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
